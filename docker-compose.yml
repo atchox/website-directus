@@ -1,0 +1,20 @@
+services:
+  directus:
+    image: directus
+    container_name: directus
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 3100:3100
+    networks:
+      - apollonet
+    volumes:
+      - ./db:/directus/database
+
+networks:
+  apollonet:
+    name: apollonet
+
+volumes:
+  postgres_data:
+    name: postgres_data
