@@ -4,7 +4,7 @@ USER root
 RUN corepack enable
 USER node
 
-FROM node:22-alpine AS prod-deps
+FROM node:23-alpine AS prod-deps
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"

@@ -24,7 +24,7 @@
 		"link": "directus-extension link"
 	},
 	"dependencies": {
-		"@directus/extensions-sdk": "12.1.0"
+		"@directus/extensions-sdk": "13.0.0"
 	},
-	"packageManager": "pnpm@9.12.3"
+	"packageManager": "pnpm@10.2.0"
 }
