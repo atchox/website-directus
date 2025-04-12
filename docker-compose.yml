@@ -14,7 +14,3 @@ services:
 networks:
   apollonet:
     name: apollonet
-
-volumes:
-  postgres_data:
-    name: postgres_data
