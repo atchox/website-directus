@@ -1,9 +1,3 @@
-FROM directus/directus:latest AS directus-base
-
-USER root
-RUN corepack enable
-USER node
-
 FROM node:24-alpine AS prod-deps
 
 ENV PNPM_HOME="/pnpm"
@@ -13,7 +7,7 @@ RUN corepack enable
 FROM prod-deps AS prod-deps-music
 
 WORKDIR /music
-COPY ./extensions/music/package.json ./extensions/music/pnpm-lock.yaml .
+COPY ./extensions/music/package.json ./extensions/music/pnpm-*.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 COPY ./extensions/music/src ./src
 RUN pnpm build
@@ -21,12 +15,12 @@ RUN pnpm build
 FROM prod-deps AS prod-deps-reach
 
 WORKDIR /reach
-COPY ./extensions/reach/package.json ./extensions/reach/pnpm-lock.yaml .
+COPY ./extensions/reach/package.json ./extensions/reach/pnpm-*.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-COPY ./extensions/reach/src ./srcw
+COPY ./extensions/reach/src ./src
 RUN pnpm build
 
-FROM directus-base
+FROM directus/directus:latest
 
 COPY --from=prod-deps-music /music/dist /directus/extensions/music/dist
 COPY --from=prod-deps-music /music/package.json /directus/extensions/music
