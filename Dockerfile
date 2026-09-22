@@ -4,7 +4,7 @@ USER root
 RUN corepack enable
 USER node
 
-FROM node:23-alpine AS prod-deps
+FROM node:24-alpine AS prod-deps
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -23,7 +23,7 @@ FROM prod-deps AS prod-deps-reach
 WORKDIR /reach
 COPY ./extensions/reach/package.json ./extensions/reach/pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-COPY ./extensions/reach/src ./src
+COPY ./extensions/reach/src ./srcw
 RUN pnpm build
 
 FROM directus-base
